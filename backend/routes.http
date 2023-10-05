@@ -1,0 +1,89 @@
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+
+###
+
+# @name create video
+POST http://localhost:3333/videos
+Content-Type: application/json
+
+{
+    "title": "Video"
+}
+
+###
+
+# @name create video
+PATCH  http://localhost:3333/videos/c1ebc704-ba78-43db-b819-f13dddd7e820
+Content-Type: application/json
+
+{
+    "title": "Lucro Real Aula 01"
+}
+
+###
+
+# @name upload
+POST http://localhost:3333/videos/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="./tmp/audio-77effd64-9338-4e33-a99b-2ca57578cf29.mp3"
+Content-Type: audio/mpeg
+
+< ./teste.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name create-transcription
+POST http://localhost:3333/videos/145728f4-7d33-4765-b3e0-fe518227ce77/transcription
+Content-Type: application/json
+
+{
+    "prompt": "rastrin, veículos, instalação, rastreadores, viagens, fluxos, topcon"
+}
+
+###
+
+# @name generata-ai-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+    "videoId": "145728f4-7d33-4765-b3e0-fe518227ce77",
+    "temperature": 0.5,
+    "prompt": "Gere um resumo sucinto da transcrição do vídeo informada a seguir: '''{transcription}'''"
+}
+
+
+###
+
+# @name create-category
+POST http://localhost:3333/categories
+Content-Type: application/json
+
+{
+    "name": "Categoria 1"
+}
+
+###
+
+# @name update-category
+PATCH  http://localhost:3333/categories/edca2833-f31b-4691-8fe6-5e12851a0223
+Content-Type: application/json
+
+{
+    "name": "Categoria teste"
+}
+
+###
+
+# @name get-categories
+GET http://localhost:3333/categories
+
+###
+
+# @name get-videos
+GET http://localhost:3333/videos
