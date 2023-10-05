@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { prisma } from "../lib/prisma";
 import { z } from "zod";
+import { JsonTranscription, saveJsonTranscription, transcriptionFileExist } from "../utils/json";
 
 export async function updateVideoRoute(app: FastifyInstance){
     app.patch('/videos/:videoId', async (request) => {
@@ -39,6 +40,18 @@ export async function updateVideoRoute(app: FastifyInstance){
                 id: videoId
             }
         })
+
+        if (transcription && !transcriptionFileExist(videoId)) {
+            var transcriptionTemplate: JsonTranscription = {
+                language: "portuguese",
+                text: transcription,
+            }
+
+            saveJsonTranscription(
+                videoId,
+                transcriptionTemplate
+            );
+        }
 
         return {
             video,
