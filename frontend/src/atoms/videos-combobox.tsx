@@ -90,7 +90,7 @@ export function VideoCombobox(props: VideosComboboxProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between whitespace-nowrap overflow-hidden overflow-ellipsis w-72"
+          className="w-full justify-between whitespace-nowrap overflow-hidden overflow-ellipsis"
           disabled={videos.length === 0 || (props.disabled ?? false)}
           title="Selecione um video..."
         >

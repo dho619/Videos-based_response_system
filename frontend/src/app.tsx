@@ -3,6 +3,7 @@ import { Button } from "./components/ui/button";
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UploadVideos } from './pages/upload-videos';
+import { AnswerQuestion } from './pages/answer-question';
 
 
 export function App() {
@@ -28,14 +29,12 @@ export function App() {
       </div>
 
       <Tabs defaultValue="upload">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="upload">Carregar videos</TabsTrigger>
-          <TabsTrigger value="search">Pesquisar nos videos</TabsTrigger>
           <TabsTrigger value="answer">Responder perguntas</TabsTrigger>
         </TabsList>
         <TabsContent value="upload"><UploadVideos /></TabsContent>
-        <TabsContent value="search">Pesquisar nos videos.</TabsContent>
-        <TabsContent value="answer">Responder perguntas.</TabsContent>
+        <TabsContent value="answer"><AnswerQuestion /></TabsContent>
       </Tabs>      
     </div>
   )

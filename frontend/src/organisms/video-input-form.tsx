@@ -252,11 +252,13 @@ export function VideoInputForm(props: VideoInputFormProps) {
             <input type='file' id='video' accept='video/mp4' className='sr-only' onChange={handleFileSelected} />
           </TabsContent>
           <TabsContent value={tabs[1]}>
-            <VideoCombobox
-              onVideoSelected={setVideo}
-              disabled={status !== 'waiting'}
-              reload={reloadComboboxVideo}
-            />
+            <div>
+              <VideoCombobox
+                onVideoSelected={setVideo}
+                disabled={status !== 'waiting'}
+                reload={reloadComboboxVideo}
+              />
+            </div>
             {video && (
               <div className="flex w-full justify-center !mt-0">
                 <span

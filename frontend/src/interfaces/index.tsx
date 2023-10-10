@@ -24,3 +24,8 @@ export interface IPrompt {
     linkedVideoColumn?: string
     createdAt: string
 };
+
+export interface ISelectionOption {
+  id: string
+  description: string
+};
