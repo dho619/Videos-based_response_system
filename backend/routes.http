@@ -87,3 +87,14 @@ GET http://localhost:3333/categories
 
 # @name get-videos
 GET http://localhost:3333/videos
+
+###
+
+# @name ask
+POST http://localhost:3333/ai/answer
+Content-Type: application/json
+
+{
+  "prompt": "O que é lucro real?",
+  "videoId": "90807764-c0d4-4125-ac28-79acec257adf"
+}

@@ -14,11 +14,12 @@ interface TranscriptionDialogProps {
     setTranscription: (value: string) => void
 }
 
-type Status = 'waiting' | 'generating';
+type Status = 'waiting' | 'generating' | 'saving';
 
 const statusMessages = {
   waiting: 'Gerar nova transcrição',
-  generating: 'Transcrevendo...'
+  generating: 'Transcrevendo...',
+  saving: 'Salvando...',
 }
 
 export function TranscriptionDialog(props: TranscriptionDialogProps) {
@@ -46,6 +47,8 @@ export function TranscriptionDialog(props: TranscriptionDialogProps) {
 
     async function handleConfirmation() {
         try {
+          setStatus('saving');
+
           const data = {
             transcription: newTranscription,
             transcriptionPrompt: newPrompt
@@ -55,9 +58,14 @@ export function TranscriptionDialog(props: TranscriptionDialogProps) {
   
           props.setTranscription(newTranscription);
           props.setPrompt(newPrompt);
+
+          alert('Transcrição salva com sucesso!')
+
           props.onOpenChange(false);
         } catch (error) {
           alert('Ocorreu um erro ao salvar a transcrição');
+        } finally {
+          setStatus('waiting');
         }
     }
 
@@ -81,9 +89,14 @@ export function TranscriptionDialog(props: TranscriptionDialogProps) {
               onClick={handleTranscription}
               disabled={status !== 'waiting'}
             >
-                {status === 'waiting'? statusMessages.waiting : statusMessages.generating}
+                {status !== 'waiting'? statusMessages.generating : statusMessages.waiting}
             </Button>
-            <Button type="button" onClick={handleConfirmation}>Confirmar</Button>
+            <Button
+              type="button"
+              onClick={handleConfirmation}
+              disabled={status !== 'waiting'}>
+                Confirmar
+              </Button>
           </div>
         }
       >

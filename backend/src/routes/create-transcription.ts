@@ -1,8 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { createReadStream } from "node:fs";
 import { z } from 'zod';
 import { prisma } from "../lib/prisma";
-import { openai } from "../lib/openai";
+import { createTranscription } from "../lib/openai";
 
 export async function createTranscriptionRoute(app: FastifyInstance){
     app.post('/videos/:videoId/transcription', async (request, reply) => {
@@ -29,16 +28,8 @@ export async function createTranscriptionRoute(app: FastifyInstance){
         if (videoPath === null)
             reply.status(400).send({ error: "Video path was not found."});
 
-        const audioReadStream = createReadStream(videoPath!);
 
-        const response = await openai.audio.transcriptions.create({
-            file: audioReadStream,
-            model: 'whisper-1',
-            language: 'pt',
-            response_format: 'json',
-            temperature: 0,
-            prompt,
-        });
+        const response = await createTranscription(videoPath!, prompt);
 
         const transcription = response.text;
 

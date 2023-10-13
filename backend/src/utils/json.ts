@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs'
+import path from 'path';
 
 export interface JsonTranscription {
     language: string;
@@ -24,13 +24,18 @@ export function saveJsonTranscription(videoId: string, jsonTranscription: JsonTr
   const jsonStr = JSON.stringify(jsonTranscription, null, 2);
 
   fs.writeFileSync(transcriptionPath, jsonStr);
+
+  return transcriptionPath;
 }
 
-
-export function transcriptionFileExist(videoId: string): boolean {
+export function deleteTranscriptionFileIfExist(videoId: string) {
   const destinationPath = process.env.PATH_TO_SAVE_TRANSCRIPTS ?? "./transcriptions";
   const videoFolder = path.join(destinationPath, videoId);
   const transcriptionPath = path.join(videoFolder, "transcription.json");
 
-  return fs.existsSync(transcriptionPath);
+  if (fs.existsSync(transcriptionPath))
+    fs.unlink(transcriptionPath, (err) => {
+      if (err)
+        throw err;
+    });
 }
